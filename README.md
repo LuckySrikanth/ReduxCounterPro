@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+## 🚀  ReduxCounterPro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**ReduxCounterPro** is a simple React + Redux-based counter app.
+It demonstrates core Redux concepts such as store, reducer, actions, and connecting React components using  `react-redux`.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### 📌 Features
 
-### `npm start`
+✅ Increment the counter
+✅ Decrement the counter
+✅ Reset counter to zero
+✅ Toggle visibility of control buttons
+✅ Centralized state management with Redux
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🛠 Tech Stack
 
-### `npm test`
+* React
+* Redux
+* React-Redux
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+### 💻 How to Run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1️⃣ **Clone this repo**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/LuckySrikanth/ReduxCounterPro.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2️⃣ **Install dependencies**
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3️⃣ **Start the app**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm run dev
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🗂 Project Structure
 
-## Learn More
+```
+src/
+ ├── App.js        # Main React component
+ ├── store.js      # Redux store + reducer
+ └── index.js      # Entry point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ⚙️ Example Code
 
-### Code Splitting
+#### `store.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```javascript
+import { createStore } from 'redux';
 
-### Analyzing the Bundle Size
+const initialState = { timer: 0, hide: true };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+const basic = (state = initialState, action) => {
+  switch(action.type) {
+    case "increment": return { ...state, timer: state.timer + 1 };
+    case "DECREMENT": return { ...state, timer: state.timer - 1 };
+    case "toggle": return { ...state, hide: !state.hide };
+    case "zero": return { ...state, timer: 0 };
+    default: return state;
+  }
+};
 
-### Making a Progressive Web App
+const store = createStore(basic);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+export default store;
+```
 
-### Advanced Configuration
+#### `App.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```javascript
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-### Deployment
+const App = () => {
+  const dispatch = useDispatch();
+  const { timer, hide } = useSelector(state => state);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <h1>Counter</h1>
+      <h3>{timer}</h3>
+      {hide && (
+        <>
+          <button onClick={() => dispatch({ type: "increment" })}>Increase</button>
+          <button onClick={() => dispatch({ type: "DECREMENT" })}>Decrease</button>
+          <button onClick={() => dispatch({ type: "zero" })}>Make To 0</button>
+        </>
+      )}
+      <div>
+        <button onClick={() => dispatch({ type: "toggle" })}>Toggle Button</button>
+      </div>
+    </div>
+  );
+};
 
-### `npm run build` fails to minify
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+### 🙌 Credits
+
+Made with ❤️ using **React** + **Redux**
+
+---
